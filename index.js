@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 import inquirer from "inquirer";
+import chalk from "chalk";
+console.log(chalk.greenBright.bold.underline("Welcome to Object Oriented Program With MehwishNaz"));
 class student {
     std_name;
     constructor(name) {
@@ -12,35 +14,25 @@ class friend {
         this.frnd_name = frnd;
     }
 }
-class teacher {
-    teach_name;
-    constructor(teach) {
-        this.teach_name = teach;
-    }
-}
 class Person {
-    students = [];
     friends = [];
-    teachers = [];
+    students = [];
+    addfrnd(obj) {
+        this.friends.push(obj);
+    }
     addStd(obj) {
         this.students.push(obj);
-    }
-    addfrnd(frnd) {
-        this.friends.push(frnd);
-    }
-    addteach(teach) {
-        this.teachers.push(teach);
     }
 }
 let persons = new Person();
 const program_Start = async (persons) => {
-    console.log("Welcome For Talking App!");
+    console.log(chalk.bold.underline.magentaBright("Welcome For Talking App!"));
     do {
         const ans = await inquirer.prompt({
             name: "option",
             type: "list",
             message: "Who would you like to talk ?",
-            choices: ["Friends", "Students", "Teachers"]
+            choices: ["Friends", "Students"]
         });
         if (ans.option == "Friends") {
             let frnd = await inquirer.prompt({
@@ -48,15 +40,15 @@ const program_Start = async (persons) => {
                 type: "input",
                 message: " which friend do you want to talk ?"
             });
-            const frnd1 = persons.friends.find(x => x.frnd_name == frnd.friend);
+            const frnd1 = persons.friends.find(val => val.frnd_name == frnd.friend);
             if (!frnd1) {
                 const new_Friend = new friend(frnd.friend);
                 persons.addfrnd(new_Friend);
-                console.log(`Hi i am ${new_Friend.frnd_name}`);
+                console.log(chalk.yellowBright(`Hi i am ${new_Friend.frnd_name}`));
                 console.log(persons.friends);
             }
             if (frnd1) {
-                console.log(`Hi i am your ${frnd1.frnd_name}`);
+                console.log(`Hi i am  ${frnd1.frnd_name}`);
                 console.log(persons.friends);
             }
         }
@@ -70,30 +62,12 @@ const program_Start = async (persons) => {
             if (!std1) {
                 const new_Std = new student(std.std_Name);
                 persons.addStd(new_Std);
-                console.log(`Hello, i am  student of GIAIC ${new_Std.std_name}`);
+                console.log(chalk.yellowBright(`Hello, i am ${new_Std.std_name} Student of GIAIC `));
                 console.log(persons.students);
             }
             if (std1) {
-                console.log(`Hello , i am your student of GIAIC ${std1.std_name}`);
+                console.log(chalk.yellow(`Hello , i am ${std1.std_name} Student of GIAIC `));
                 console.log(persons.students);
-            }
-        }
-        if (ans.option == "Teachers") {
-            let teach = await inquirer.prompt({
-                name: "teacher_Name",
-                type: "input",
-                message: " Which Teacher do you want talk to ?"
-            });
-            const teach1 = persons.teachers.find(val => val.teach_name == teach.teacher_Name);
-            if (!teach1) {
-                const new_Teach = new teacher(teach.teacher_Name);
-                persons.addStd(new_Teach);
-                console.log(`Hello, i am  Teacher of GIAIC ${new_Teach.teach_name}`);
-                console.log(persons.teachers);
-            }
-            if (teach1) {
-                console.log(`Hello, I am Teacher Of GIAIC ${teach1.teach_name}`);
-                console.log(persons.teachers);
             }
         }
     } while (true);

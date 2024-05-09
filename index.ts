@@ -1,4 +1,3 @@
-#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk"
 
@@ -16,11 +15,16 @@ class friend {
         this.frnd_name = frnd
     }
 }
-
+class teacher {
+  tchr_name: string;
+  constructor(name: string) {
+      this.tchr_name = name
+  }
+}
 class Person {
     friends: friend[] = []
     students: student[] = []
-
+    teachers: teacher[] = []
     
     addfrnd(obj: friend) {
         this.friends.push(obj)
@@ -28,6 +32,9 @@ class Person {
     addStd(obj: student) {
         this.students.push(obj)
     }
+    addTchr(obj: teacher) {
+      this.teachers.push(obj)
+  }
 }
 let persons = new Person()
 
@@ -38,7 +45,7 @@ const program_Start = async (persons: Person) => {
         name: "option",
         type: "list",
         message: "Who would you like to talk ?",
-        choices: ["Friends", "Students"]
+        choices: ["Friends", "Students","Teachers"]
     })
     if(ans.option == "Friends") {
         let frnd = await inquirer.prompt({
@@ -53,7 +60,7 @@ const program_Start = async (persons: Person) => {
             console.log(chalk.yellowBright(`Hi i am ${new_Friend.frnd_name}`))
             console.log(persons.friends)
         }
-        if(frnd1) { 
+        if(frnd1) {
             console.log(`Hi i am  ${frnd1.frnd_name}`)
             console.log(persons.friends)
         }
@@ -77,7 +84,26 @@ const program_Start = async (persons: Person) => {
             console.log(persons.students)
         }
     }
+
+if(ans.option == "Teachers") {
+  let tchr = await inquirer.prompt({
+      name: "tchr_Name",
+      type: "input",
+      message: " which teacher do you want to talk ?"
+  })
+  const tchr1 = persons.teachers.find(val => val.tchr_name == tchr.tchr_Name)
+  if(!tchr1) {
+      const new_Tchr = new teacher(tchr.tchr_Name) 
+      persons.addTchr(new_Tchr)
+      console.log(chalk.yellowBright(`Hi i am ${new_Tchr.tchr_name}`))
+      console.log(persons.teachers)
+  }
+  if(tchr1) {
+      console.log(`Hi i am  ${tchr1.tchr_name}`)
+      console.log(persons.teachers)
+  }
+}
 }
 while(true);
-};
-program_Start(persons)
+}
+  program_Start(persons)

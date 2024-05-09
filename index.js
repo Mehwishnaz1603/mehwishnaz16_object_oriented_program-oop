@@ -1,4 +1,3 @@
-#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
 console.log(chalk.greenBright.bold.underline("Welcome to Object Oriented Program With MehwishNaz"));
@@ -14,14 +13,24 @@ class friend {
         this.frnd_name = frnd;
     }
 }
+class teacher {
+    tchr_name;
+    constructor(name) {
+        this.tchr_name = name;
+    }
+}
 class Person {
     friends = [];
     students = [];
+    teachers = [];
     addfrnd(obj) {
         this.friends.push(obj);
     }
     addStd(obj) {
         this.students.push(obj);
+    }
+    addTchr(obj) {
+        this.teachers.push(obj);
     }
 }
 let persons = new Person();
@@ -32,7 +41,7 @@ const program_Start = async (persons) => {
             name: "option",
             type: "list",
             message: "Who would you like to talk ?",
-            choices: ["Friends", "Students"]
+            choices: ["Friends", "Students", "Teachers"]
         });
         if (ans.option == "Friends") {
             let frnd = await inquirer.prompt({
@@ -68,6 +77,24 @@ const program_Start = async (persons) => {
             if (std1) {
                 console.log(chalk.yellow(`Hello , i am ${std1.std_name} Student of GIAIC `));
                 console.log(persons.students);
+            }
+        }
+        if (ans.option == "Teachers") {
+            let tchr = await inquirer.prompt({
+                name: "tchr_Name",
+                type: "input",
+                message: " which teacher do you want to talk ?"
+            });
+            const tchr1 = persons.teachers.find(val => val.tchr_name == tchr.tchr_Name);
+            if (!tchr1) {
+                const new_Tchr = new teacher(tchr.tchr_Name);
+                persons.addTchr(new_Tchr);
+                console.log(chalk.yellowBright(`Hi i am ${new_Tchr.tchr_name}`));
+                console.log(persons.teachers);
+            }
+            if (tchr1) {
+                console.log(`Hi i am  ${tchr1.tchr_name}`);
+                console.log(persons.teachers);
             }
         }
     } while (true);

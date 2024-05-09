@@ -95,7 +95,7 @@ if(ans.option == "Teachers") {
   if(!tchr1) {
       const new_Tchr = new teacher(tchr.tchr_Name) 
       persons.addTchr(new_Tchr)
-      console.log(chalk.yellowBright(`Hi i am ${new_Tchr.tchr_name}`))
+      console.log(chalk.yellowBright(`Hi i am teacher, My name is ${new_Tchr.tchr_name}`))
       console.log(persons.teachers)
   }
   if(tchr1) {

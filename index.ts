@@ -53,7 +53,7 @@ const program_Start = async (persons: Person) => {
             console.log(chalk.yellowBright(`Hi i am ${new_Friend.frnd_name}`))
             console.log(persons.friends)
         }
-        if(frnd1) {
+        if(frnd1) { 
             console.log(`Hi i am  ${frnd1.frnd_name}`)
             console.log(persons.friends)
         }
